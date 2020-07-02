@@ -130,7 +130,7 @@ weights_flag = 'imagenet' # 'imagenet' or None
 preprocess_flag = True # Should be true for ImageNet pre-trained typically
 
 # Loads in InceptionV3
-from keras.applications.inception_v3 import InceptionV3
+from keras.applications.inception_resnet_v2 import InceptionResNetV2
 
 
 # In[11]:
@@ -138,7 +138,7 @@ from keras.applications.inception_v3 import InceptionV3
 
 
 # Using Inception with ImageNet pre-trained weights
-inception = InceptionV3(weights=weights_flag, include_top=False,
+inception = InceptionResNetV2(weights=weights_flag, include_top=False,
                         input_shape=(row,col,3))
 
 
@@ -171,7 +171,7 @@ model.add(inception)
 # In[37]:
 
 
-model.add(GlobalAveragePooling2D())
+model.add(Flatten())
 model.add(Dense(512,activation='relu'))
 model.add(Dense(128,activation='relu'))
 model.add(Dense(1))

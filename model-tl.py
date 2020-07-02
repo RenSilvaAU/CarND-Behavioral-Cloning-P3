@@ -45,8 +45,8 @@ df_data[-5:-1].head()
 # get_ipython().run_line_magic('matplotlib', 'inline')
 # import numpy as np
 
-# def resolve_name(name,dirname):
-#     return dirname + 'IMG/{}'.format(name.split('/')[-1])
+def resolve_name(name,dirname):
+    return dirname + 'IMG/{}'.format(name.split('/')[-1])
 
 # import cv2
 # for center,dirname in zip(df_data['center'][:5],df_data['dir'][:5]):
@@ -200,8 +200,7 @@ history = model.fit_generator(train_generator,
             steps_per_epoch=ceil(len(train_samples)/batch_size), 
             validation_data=validation_generator, 
             validation_steps=ceil(len(validation_samples)/batch_size), 
-            epochs=2, verbose=1,
-            callbacks=[checkpoint])
+            epochs=2, verbose=1)
 
 
 # In[23]:
@@ -213,13 +212,13 @@ from keras.models import load_model
 # In[ ]:
 
 
-model = models.load('./models/best.h5')
+# model = models.load('./models/best.h5')
 
 
 # In[ ]:
 
 
-model.save('model.h5')
+model.save('model-tl.h5')
 
 
 # In[52]:

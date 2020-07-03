@@ -15,6 +15,9 @@ from keras.layers import Dense,Conv2D,Input,MaxPooling2D,Flatten,Lambda,Cropping
 from keras.callbacks import ModelCheckpoint
 from math import ceil
 
+# seed random to keep make results predictable
+import random
+random.seed(10)
 
 # files for training running in the track forward
 FWD = './drive-data/june-23/'

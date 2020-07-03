@@ -15,9 +15,6 @@ from keras.layers import Dense,Conv2D,Input,MaxPooling2D,Flatten,Lambda,Cropping
 from keras.callbacks import ModelCheckpoint
 from math import ceil
 
-# seed random to keep make results predictable
-import random
-random.seed(10)
 
 # files for training running in the track forward
 FWD = './drive-data/june-23/'
@@ -134,32 +131,29 @@ validation_generator = generator(validation_samples, batch_size=batch_size)
 # define model
 model = Sequential()
 
-# crop top part of the image
 model.add(Cropping2D(cropping=((80,0), (0,0)), input_shape=(160,320,3)))
-
 # Preprocess incoming data, centered around zero with small standard deviation 
 model.add(Lambda(lambda x: x/127.5 - 1.,
         input_shape=(80, 320, 3),
         output_shape=(80, 320,3)))
-
-# now build a "lenet" inspired CNN
-model.add(Conv2D(8,(5,5),activation='relu'))
+model.add(Conv2D(8,(5,5)))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Conv2D(16,(5,5),activation='relu'))
+model.add(Conv2D(16,(5,5)))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Conv2D(32,(5,5)))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Conv2D(64,(5,5),activation='relu'))
+model.add(Conv2D(64,(5,5)))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Flatten())
-model.add(Dense(256,activation='relu'))
+model.add(Dense(256))
 model.add(Dropout(.75))
-model.add(Dense(128,activation='relu'))
+model.add(Dense(128))
 model.add(Dropout(.75))
-model.add(Dense(64,activation='relu'))
+model.add(Dense(64))
 model.add(Dropout(.75))
-model.add(Dense(1))  # no activation -> this is a regression problem
+model.add(Dense(1))
 
+model.summary()
 # print model definition
 model.summary()
 

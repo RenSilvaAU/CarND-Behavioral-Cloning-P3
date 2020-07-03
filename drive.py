@@ -24,9 +24,9 @@ model = None
 prev_image_array = None
 
 # seed random to keep make results predictable
-import random
+# import random
 
-random.seed(10)
+# random.seed(10)
 
 class SimplePIController:
     def __init__(self, Kp, Ki):

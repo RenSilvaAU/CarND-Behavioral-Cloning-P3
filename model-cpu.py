@@ -109,6 +109,8 @@ def generator(samples, batch_size=32):
             for batch_sample in batch_samples:
                 name = resolve_name(batch_sample[0],batch_sample[7])
                 center_image = cv2.imread(name)
+                center_image = cv2.cvtColor(center_image, cv2.COLOR_BGR2RGB)
+                
                 center_angle = float(batch_sample[3])
                 images.append(center_image)
                 angles.append(center_angle)
@@ -117,6 +119,8 @@ def generator(samples, batch_size=32):
                 flp_center_image = np.fliplr(center_image)
                 flp_center_angle = -center_angle
 
+                images.append(flp_center_image)
+                angles.append(flp_center_angle)                
 
             X_train = np.array(images)
             y_train = np.array(angles)

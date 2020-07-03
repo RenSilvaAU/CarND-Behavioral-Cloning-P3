@@ -12,6 +12,8 @@ from PIL import Image
 from flask import Flask
 from io import BytesIO
 
+
+
 from keras.models import load_model
 import h5py
 from keras import __version__ as keras_version
@@ -21,6 +23,10 @@ app = Flask(__name__)
 model = None
 prev_image_array = None
 
+# seed random to keep make results predictable
+import random
+
+random.seed(10)
 
 class SimplePIController:
     def __init__(self, Kp, Ki):

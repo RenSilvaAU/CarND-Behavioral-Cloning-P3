@@ -122,7 +122,7 @@ def generator(samples, batch_size=32):
             yield sklearn.utils.shuffle(X_train, y_train)
 
 # Set our batch size
-batch_size=32
+batch_size=256  # 128 for n3 .3639
 
 # creating train and validation generators
 train_generator = generator(train_samples, batch_size=batch_size)
@@ -136,24 +136,22 @@ model.add(Cropping2D(cropping=((80,0), (0,0)), input_shape=(160,320,3)))
 model.add(Lambda(lambda x: x/127.5 - 1.,
         input_shape=(80, 320, 3),
         output_shape=(80, 320,3)))
-model.add(Conv2D(8,(5,5)))
+model.add(Conv2D(16,(3,3),activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Conv2D(16,(5,5)))
+model.add(Conv2D(32,(3,3)))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Conv2D(32,(5,5)))
+model.add(Conv2D(64,(3,3),activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Conv2D(64,(5,5)))
+model.add(Conv2D(128,(3,3),activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Flatten())
-model.add(Dense(256))
-model.add(Dropout(.75))
-model.add(Dense(128))
-model.add(Dropout(.75))
-model.add(Dense(64))
-model.add(Dropout(.75))
+model.add(Dense(512,activation='relu'))
+model.add(Dropout(.8))
+model.add(Dense(128,activation='relu'))
+model.add(Dropout(.8))
 model.add(Dense(1))
 
-model.summary()
+
 # print model definition
 model.summary()
 
@@ -172,7 +170,7 @@ history = model.fit_generator(train_generator,
 model.load_weights('./models/best.h5')
 
 # now save model
-model.save('model-new.h5')
+model.save('model-1.h5')
 
 # ===> this was used in the notebook, but is not used in the python script
 # ===> leaving it here for compatibility

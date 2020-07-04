@@ -122,7 +122,7 @@ def generator(samples, batch_size=32):
             yield sklearn.utils.shuffle(X_train, y_train)
 
 # Set our batch size
-batch_size=256  # 128 for n3 .3639
+batch_size=128 
 
 # creating train and validation generators
 train_generator = generator(train_samples, batch_size=batch_size)
@@ -150,10 +150,10 @@ model.add(Dropout(.8))
 model.add(Dense(128,activation='relu'))
 model.add(Dropout(.8))
 model.add(Dense(1))
-
-
 # print model definition
 model.summary()
+
+
 
 # define checkpoint to save weights for model with lowest validation loss
 checkpoint = ModelCheckpoint(filepath='./models/best.h5', monitor='val_loss', save_best_only=True, save_weights_only=True,verbose=1)
